@@ -60,4 +60,14 @@ router.patch('/', async (req,res)=> {
     }
 });
 
+router.post("/simulate", async (req, res) => {
+    var inputData = req.body;
+    var outputPayload;
+    if (inputData.operation.toLowerCase() === "javascript") {
+        eval(inputData.extractionPath);
+        outputPayload = transform(inputData.inputPayload);
+    }
+
+    res.json({ "outputPayload": outputPayload, "payloadType": typeof outputPayload });
+});
 module.exports = router;
